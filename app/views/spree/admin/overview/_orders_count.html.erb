@@ -1,0 +1,48 @@
+<div class='col-12'>
+  <h5 class='bar-title' id='order_by_day_title'>
+    <span>
+      <%= t('spree.simple_dash.orders') %> <%= t('spree.simple_dash.count') %> <%= t('spree.simple_dash.by_day') %> (<%= t('spree.simple_dash.last_7_days') %>)
+    </span>
+  </h5>
+
+  <div class='general-info info row'>
+    <table id='order_totals'>
+      <tr>
+        <td style='width:23%;'>
+          <p><%= t('number.currency.format.unit') %></p>
+          <label id='orders_total'><%= number_with_delimiter @orders_total.to_i %></label>
+          <span><%= t('spree.order') %> <%= t('spree.total') %></span>
+        </td>
+        <td class='spacer'>|</td>
+        <td style='width:23%;'>
+          <p><%= t('number.currency.format.unit') %></p>
+          <label id='orders_line_total'><%= number_with_delimiter @orders_line_total.to_i %></label>
+          <span><%= t('spree.simple_dash.item') %> <%= t('spree.total') %></span>
+        </td>
+        <td class='spacer'>|</td>
+        <td style='width:23%;'>
+          <p><%= t('number.currency.format.unit') %></p>
+          <label id='orders_adjustment_total'><%= number_with_delimiter @orders_adjustment_total.to_i %></label>
+          <span><%= t('spree.adjustments') %></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class='general-info graph row'>
+    <div id='orders_by_day' style='width: 100%; height: 240px;'></div>
+  </div>
+
+  <div class='general-info options row' id='orders_by_day_options'>
+    <div class='col-6'>
+      <label><%= t('spree.simple_dash.range') %>:</label>
+      <%= select_tag 'orders_by_day_reports', options_for_select([[t('spree.simple_dash.last_7_days'), '7_days'], [t('spree.simple_dash.last_14_days'), '14_days'], [t('spree.simple_dash.this_month'), 'this_month'],
+                                              [t('spree.simple_dash.last_month'), 'last_month'], [t('spree.simple_dash.this_year'), 'this_year'], [t('spree.simple_dash.last_year'), 'last_year'] ], '7_days'), class: 'custom-select full-width' %>
+    </div>
+
+    <div class='col-6'>
+      <label><%= t('spree.simple_dash.value') %>:</label>
+      <%= select_tag 'orders_by_day_value', options_for_select({t('spree.simple_dash.count') => 'Count', t('spree.simple_dash.value') => 'Value'}, 'Count'), class: 'custom-select full-width' %>
+    </div>
+  </div>
+</div>

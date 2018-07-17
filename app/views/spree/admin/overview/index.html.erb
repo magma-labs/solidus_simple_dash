@@ -1,0 +1,51 @@
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.overview')) %>
+
+<% content_for :page_actions do %>
+<% end %>
+
+<div data-hook='admin_overview_dashboard'>
+  <% if @display_ability %>
+    <div class='dashboard_wrapper' data-hook='admin_dashboard_top_sales'>
+      <div class='dashboard-top-sales row'>
+        <%= render partial: 'spree/admin/overview/best_selling_products' %>
+        <%= render partial: 'spree/admin/overview/top_grossing_products' %>
+        <%= render partial: 'spree/admin/overview/best_selling_taxons' %>
+      </div>
+    </div>
+
+    <div class='dashboard_wrapper' data-hook='admin_dashboard_historical_sales'>
+      <div class='dashboard-historical-sales row'>
+        <%= render partial: 'spree/admin/overview/orders_count' %>
+      </div>
+    </div>
+
+    <div class='dashboard_wrapper' data-hook='admin_dashboard_products'>
+      <div class='dashboard-top-products row'>
+        <%= render partial: 'spree/admin/overview/last_orders' %>
+        <%= render partial: 'spree/admin/overview/biggest_spenders' %>
+        <%= render partial: 'spree/admin/overview/out_of_stock' %>
+      </div>
+    </div>
+  <% else %>
+    <div class='no-objects-found' data-hook='admin_dashboard_welcome'>
+      <%== t('spree.simple_dash.overview_welcome') %>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :head do %>
+  <% if @display_ability %>
+    <%= javascript_tag do -%>
+      var orders_by_day_points = [[ <%== @orders_by_day.map { |day| "[\"#{day[0]}\",#{day[1]}]" }.join(",") %> ]];
+      var best_selling_variants_points = [ <%== @best_selling_variants.map { |v| "[\"#{h(v[0])}\",#{v[1]}]" }.join(",") %> ];
+      var top_grossing_variants_points = [ <%== @top_grossing_variants.map { |v| "[\"#{h(v[0])}\",#{v[1]}]" }.join(",") %> ];
+      var best_selling_taxons_points = [ <%== @best_selling_taxons.map { |t| "[\"#{h(t[0])}\",#{t[1]}]" }.join(",") %> ];
+
+      var orders = "<%= t('spree.orders') %>";
+      var by_day = "<%= t('spree.simple_dash.by_day') %>";
+
+      var pie_colors = [<%== @pie_colors.map{|c| "'#{c}'"}.join(",") %>];
+    <% end -%>
+  <% end %>
+<% end %>

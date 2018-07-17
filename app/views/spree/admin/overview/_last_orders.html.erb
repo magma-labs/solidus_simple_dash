@@ -1,0 +1,27 @@
+<div class='col-4'>
+  <div class='last-orders'>
+    <h5 class='bar-title'>
+      <span><%= t('spree.simple_dash.last_5_orders') %></span>
+    </h5>
+
+    <table>
+      <thead>
+        <tr>
+          <th><%= t('spree.name') %></th>
+          <th class='text-right'><%= t('spree.simple_dash.items') %></th>
+          <th class='text-right'><%= t('spree.total') %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @last_five_orders.each do |order| %>
+          <tr>
+            <td><%= truncate order[0], :length => 18 %></td>
+            <td class='text-right'><%= order[1] %></td>
+            <td class='text-right'><%= number_to_currency order[2] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

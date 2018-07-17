@@ -1,0 +1,9 @@
+<% if Spree.respond_to?(:solidus_version) && Spree.solidus_version > '1.4' %>
+  <ul class='admin-subnav' data-hook='admin_overview_sub_tabs'>
+    <%= tab :overview, match_path: '/overview' %>
+  </ul>
+<% else %>
+  <% if can? :admin, Spree::Order %>
+    <%= tab *SolidusSimpleDash::Config::ORDER_TABS, icon: 'bar-chart' %>
+  <% end %>
+<% end %>

@@ -1,0 +1,17 @@
+<div class='col-4'>
+  <h5 class='bar-title'>
+    <span><%= t('spree.simple_dash.best_selling_taxons') %></span>
+  </h5>
+
+  <div id='best_selling_taxons' style='width:80%; height:220px;'></div>
+
+  <div id='pie-legend'>
+    <% @best_selling_taxons.each_with_index do |t,i| %>
+      <div class='pie-element'>
+        <i style='background-color:<%= @pie_colors[i] %>'>&nbsp;</i>
+        <label><%= truncate t[0], length: 35 %></label>
+        <span><%= number_with_delimiter t[1] %> <%= t('spree.simple_dash.units') %></span>
+      </div>
+    <% end %>
+  </div>
+</div>

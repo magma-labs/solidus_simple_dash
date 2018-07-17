@@ -1,0 +1,23 @@
+<div class='col-4'>
+  <div class='out-of-stock'>
+    <h5 class='bar-title'>
+      <span><%= t('spree.simple_dash.out_of_stock_products') %></span>
+    </h5>
+
+    <table>
+      <thead>
+        <tr>
+          <th><%= t('spree.name') %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @out_of_stock_products.each do |product| %>
+          <tr>
+            <td><%= product.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
