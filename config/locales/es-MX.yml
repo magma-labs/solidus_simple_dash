@@ -1,0 +1,35 @@
+es-MX:
+  spree:
+    admin:
+      tab:
+        overview: Visión general
+    simple_dash:
+      abandoned_carts: Carritos Abandonados
+      abandoned_carts_products: Productos en Carritos Abandonados
+      best_selling_products: Productos Mejor Vendidos
+      best_selling_taxons: Categorias Mejor Vendidas
+      biggest_spenders: Mejores Compradores
+      by_day: por día
+      checkout_steps: Pasos en la Compra
+      completed_carts: Carritos Completados
+      count: Conteo
+      five_biggest_spenders: 5 Biggest Spenders
+      item: Pieza
+      items: Piezas
+      last_14_days: Últimos 14 Días
+      last_5_orders: Últimos 5 Ordenes
+      last_7_days: Últimos 7 Días
+      last_month: Último Mes
+      last_year: Último Año
+      ord_qty: Ord. Ctd.
+      ord_total: Ord. Total
+      orders: Ordenes
+      out_of_stock_products: Sin Inventario
+      overview: Visión general
+      overview_welcome: Bienvenido a la visión general de tu tienda, actualmente no cuentas con la suficiente información para mostrar. La información se mostrará automáticamente cuando se tengan suficientes ordenes para generar las estadísticas.
+      range: Rango
+      this_month: Este Mes
+      this_year: Este Año
+      top_grossing_products: Productos con Mayor Recaudación
+      units: Unidades
+      value: Valor
