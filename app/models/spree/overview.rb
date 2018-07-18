@@ -46,6 +46,25 @@ module Spree
       Spree::Order.where(conditions).sum(:adjustment_total)
     end
 
+    def abandoned_carts
+      [ [I18n.t('spree.simple_dash.abandoned_carts'), Spree::Order.abandoned_carts.size],
+        [I18n.t('spree.simple_dash.completed_carts'), Spree::Order.complete.size] ]
+    end
+
+    def abandoned_carts_products
+      line_items = Spree::LineItem.abandoned_orders
+
+      line_items.sort { |x, y| y[1] <=> x[1] }
+    end
+
+    def checkout_steps
+      orders = line_items = Spree::Order.abandoned_carts_steps.map do |v|
+        [v[0].titleize, v[1]]
+      end
+
+      orders.sort { |x, y| y[1] <=> x[1] }
+    end
+
     def best_selling_variants
       line_items =  Spree::LineItem.top_selling_by_variants.map do |v|
         variant = Spree::Variant.find(v[0])

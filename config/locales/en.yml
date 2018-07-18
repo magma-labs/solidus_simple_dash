@@ -4,10 +4,14 @@ en:
       tab:
         overview: Overview
     simple_dash:
+      abandoned_carts: Abandoned Carts
+      abandoned_carts_products: Abandoned Cart Products
       best_selling_products: Best Selling Products
       best_selling_taxons: Best Selling Taxons
       biggest_spenders: Biggest Spenders
       by_day: by day
+      checkout_steps: Checkout Steps
+      completed_carts: Completed Carts
       count: Count
       five_biggest_spenders: 5 Biggest Spenders
       item: Item

@@ -25,4 +25,13 @@ Spree::LineItem.class_eval do
     limit(limit).
     sum('price * quantity')
   end
+
+  scope :abandoned_orders, ->(limit = 5) do
+    joins(:order, variant: :product).
+    where("#{Spree::Order.table_name}.state != 'complete'").
+    order('SUM(spree_line_items.quantity) DESC').
+    group("#{Spree::Product.table_name}.name").
+    limit(limit).
+    sum(:quantity)
+  end
 end

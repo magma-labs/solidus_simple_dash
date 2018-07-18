@@ -12,6 +12,12 @@
         <%= render partial: 'spree/admin/overview/top_grossing_products' %>
         <%= render partial: 'spree/admin/overview/best_selling_taxons' %>
       </div>
+
+      <div class='dashboard-sales row'>
+        <%= render partial: 'spree/admin/overview/abandoned_carts' %>
+        <%= render partial: 'spree/admin/overview/checkout_steps' %>
+        <%= render partial: 'spree/admin/overview/abandoned_carts_products' %>
+      </div>
     </div>
 
     <div class='dashboard_wrapper' data-hook='admin_dashboard_historical_sales'>
@@ -41,6 +47,9 @@
       var best_selling_variants_points = [ <%== @best_selling_variants.map { |v| "[\"#{h(v[0])}\",#{v[1]}]" }.join(",") %> ];
       var top_grossing_variants_points = [ <%== @top_grossing_variants.map { |v| "[\"#{h(v[0])}\",#{v[1]}]" }.join(",") %> ];
       var best_selling_taxons_points = [ <%== @best_selling_taxons.map { |t| "[\"#{h(t[0])}\",#{t[1]}]" }.join(",") %> ];
+      var abandoned_carts_points = [ <%== @abandoned_carts.map { |v| "[\"#{h(v[0])}\",#{v[1]}]" }.join(",") %> ];
+      var checkout_steps_points = [ <%== @checkout_steps.map { |v| "[\"#{h(v[0])}\",#{v[1]}]" }.join(",") %> ];
+      var abandoned_carts_products_points = [ <%== @abandoned_carts_products.map { |v| "[\"#{h(v[0])}\",#{v[1]}]" }.join(",") %> ];
 
       var orders = "<%= t('spree.orders') %>";
       var by_day = "<%= t('spree.simple_dash.by_day') %>";

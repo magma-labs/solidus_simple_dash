@@ -13,4 +13,18 @@ Spree::Order.class_eval do
     limit(5).
     sum(:total)
   end
+
+  scope :abandoned_carts, ->(limit = 5) do
+    incomplete.
+    where('email IS NOT NULL AND item_count > 0 AND updated_at < ?', Time.now)
+    limit(limit)
+  end
+
+  scope :abandoned_carts_steps, ->(limit = 5) do
+    order('COUNT(state) DESC').
+    where('updated_at < ?', Time.now)
+    limit(limit).
+    group(:state).
+    count
+  end
 end

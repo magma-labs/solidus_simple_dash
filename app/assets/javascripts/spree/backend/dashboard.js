@@ -128,6 +128,40 @@ jQuery(document).ready(function(){
       });
     });
 
+    abandoned_carts = jQuery.jqplot('abandoned_carts', [abandoned_carts_points], {
+      grid: {
+        background:'#fff',
+        borderWidth: 0,
+        borderColor: '#fff',
+        shadow: false
+      },
+      seriesDefaults:{
+        renderer: jQuery.jqplot.PieRenderer,
+        rendererOptions: {
+          padding: 6,
+          sliceMargin: 0
+        }
+      },
+      seriesColors: pie_colors
+    });
+
+    abandoned_carts_products = jQuery.jqplot('abandoned_carts_products', [abandoned_carts_products_points], {
+      grid: {
+        background:'#fff',
+        borderWidth: 0,
+        borderColor: '#fff',
+        shadow: false
+      },
+      seriesDefaults:{
+        renderer: jQuery.jqplot.PieRenderer,
+        rendererOptions: {
+          padding: 6,
+          sliceMargin: 0
+        }
+      },
+      seriesColors: pie_colors
+    });
+
     best_selling_variants = jQuery.jqplot('best_selling_products', [best_selling_variants_points], {
       grid: {
         background:'#fff',
@@ -136,10 +170,27 @@ jQuery(document).ready(function(){
         shadow: false
       },
       seriesDefaults:{
-        renderer:jQuery.jqplot.PieRenderer,
+        renderer: jQuery.jqplot.PieRenderer,
         rendererOptions: {
-          padding:6,
-          sliceMargin:0
+          padding: 6,
+          sliceMargin: 0
+        }
+      },
+      seriesColors: pie_colors
+    });
+
+    checkout_steps = jQuery.jqplot('checkout_steps', [checkout_steps_points], {
+      grid: {
+        background:'#fff',
+        borderWidth: 0,
+        borderColor: '#fff',
+        shadow: false
+      },
+      seriesDefaults:{
+        renderer: jQuery.jqplot.PieRenderer,
+        rendererOptions: {
+          padding: 6,
+          sliceMargin: 0
         }
       },
       seriesColors: pie_colors

@@ -1,0 +1,17 @@
+<div class='col-4'>
+  <h5 class='bar-title'>
+    <span><%= t('spree.simple_dash.abandoned_carts_products') %></span>
+  </h5>
+
+  <div id='abandoned_carts_products' style='width:80%; height:220px;'></div>
+
+  <div id='pie-legend'>
+    <% @abandoned_carts_products.each_with_index do |v,i| %>
+      <div class='pie-element'>
+        <i style='background-color:<%= @pie_colors[i] %>'>&nbsp;</i>
+        <label><%= truncate v[0], length: 35 %></label>
+        <span><%= number_with_delimiter v[1] %> <%= t('spree.simple_dash.units') %></span>
+      </div>
+    <% end %>
+  </div>
+</div>

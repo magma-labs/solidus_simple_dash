@@ -10,17 +10,21 @@ module Spree
       def index
         return unless display_ability
 
-        @orders_by_day =            LazyObject.new { overview.orders_by_day }
-        @orders_line_total =        LazyObject.new { overview.orders_line_total }
-        @orders_total =             LazyObject.new { overview.orders_total }
-        @orders_adjustment_total =  LazyObject.new { overview.orders_adjustment_total }
+        @best_selling_variants = LazyObject.new { overview.best_selling_variants }
+        @top_grossing_variants = LazyObject.new { overview.top_grossing_variants }
+        @best_selling_taxons = LazyObject.new { overview.best_selling_taxons }
+        @abandoned_carts = LazyObject.new { overview.abandoned_carts }
+        @checkout_steps = LazyObject.new { overview.checkout_steps }
+        @abandoned_carts_products = LazyObject.new { overview.abandoned_carts_products }
 
-        @best_selling_variants =    LazyObject.new { overview.best_selling_variants }
-        @top_grossing_variants =    LazyObject.new { overview.top_grossing_variants }
-        @last_five_orders =         LazyObject.new { overview.last_orders }
-        @biggest_spenders =         LazyObject.new { overview.biggest_spenders }
-        @out_of_stock_products =    LazyObject.new { overview.out_of_stock_products }
-        @best_selling_taxons =      LazyObject.new { overview.best_selling_taxons }
+        @orders_by_day = LazyObject.new { overview.orders_by_day }
+        @orders_line_total = LazyObject.new { overview.orders_line_total }
+        @orders_total = LazyObject.new { overview.orders_total }
+        @orders_adjustment_total = LazyObject.new { overview.orders_adjustment_total }
+
+        @last_five_orders = LazyObject.new { overview.last_orders }
+        @biggest_spenders = LazyObject.new { overview.biggest_spenders }
+        @out_of_stock_products = LazyObject.new { overview.out_of_stock_products }
 
         @pie_colors = Spree::Overview::DEFAULT_COLORS
       end
