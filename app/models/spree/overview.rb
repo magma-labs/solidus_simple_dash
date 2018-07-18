@@ -67,7 +67,7 @@ module Spree
 
     def best_selling_variants
       line_items =  Spree::LineItem.top_selling_by_variants.map do |v|
-        variant = Spree::Variant.find(v[0])
+        variant = Spree::Variant.with_deleted.find(v[0])
         [variant.name, v[1]]
       end
 
@@ -76,7 +76,7 @@ module Spree
 
     def top_grossing_variants
       line_items = Spree::LineItem.top_grossing_by_variants.map do |v|
-        variant = Spree::Variant.find(v[0])
+        variant = Spree::Variant.with_deleted.find(v[0])
         [variant.name, v[1]]
       end
 
