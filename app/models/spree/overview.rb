@@ -58,27 +58,29 @@ module Spree
     end
 
     def checkout_steps
-      orders = line_items = Spree::Order.abandoned_carts_steps.map do |v|
-        [v[0].titleize, v[1]]
+      orders = Spree::Order.abandoned_carts_steps.map do |o|
+        [o[0].titleize, o[1]]
       end
 
       orders.sort { |x, y| y[1] <=> x[1] }
     end
 
     def best_selling_variants
-      line_items =  Spree::LineItem.top_selling_by_variants.map do |v|
-        variant = Spree::Variant.with_deleted.find(v[0])
-        [variant.name, v[1]]
-      end
+      line_items =  Spree::LineItem.top_selling_by_variants.map do |li|
+        next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
+
+        [variant.name, li[1]]
+      end.compact
 
       line_items.sort { |x, y| y[1] <=> x[1] }
     end
 
-    def top_grossing_variants
-      line_items = Spree::LineItem.top_grossing_by_variants.map do |v|
-        variant = Spree::Variant.with_deleted.find(v[0])
-        [variant.name, v[1]]
-      end
+    def y
+      line_items = r.map do |li|
+        next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
+
+        [variant.name, li[1]]
+      end.compact
 
       line_items.sort { |x, y| y[1] <=> x[1] }
     end
@@ -89,20 +91,23 @@ module Spree
 
     def last_orders(limit = 5)
       orders = Spree::Order.last_orders_by_line_items(limit).map do |o|
+        next unless o.line_items
+
         qty = o.line_items.inject(0) { |sum, li| sum + li.quantity }
         [o.email, qty, o.total]
-      end
+      end.compact
 
       orders
     end
 
     def biggest_spenders
       spenders = Spree::Order.biggest_spenders.map do |o|
-        orders = Spree::User.find(o[0]).orders
-        qty = orders.size
+        next unless user = Spree::User.find_by(id: o[0])
 
+        orders = user.orders
+        qty = orders.size
         [orders.first.email, qty, o[1]]
-      end
+      end.compact
 
       spenders.sort { |x,y| y[2] <=> x[2] }
     end

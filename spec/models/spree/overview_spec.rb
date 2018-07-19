@@ -20,7 +20,7 @@ describe Spree::Overview, type: :model do
     product4.taxons = [ taxon ]
     product5.taxons = [ taxon ]
   end
-  let(:line_items) do
+  let!(:line_items) do
     [ create(:line_item, variant: variant1, quantity: 5),
       create(:line_item, variant: variant2, quantity: 4),
       create(:line_item, variant: variant3, quantity: 3),
@@ -30,6 +30,7 @@ describe Spree::Overview, type: :model do
   let!(:order) do
     create(:completed_order_with_totals, user: user, line_items: line_items)
   end
+  let!(:order_on_cart) { create(:order, user: user, line_items: line_items, completed_at: nil, state: 'cart') }
   let(:params) do
     { from: (Time.new().to_date - 1.week).to_s(:db), value: 'Count' }
   end
@@ -74,7 +75,25 @@ describe Spree::Overview, type: :model do
 
   context '#best_selling_taxons' do
     it 'returns data' do
-      expect(subject.best_selling_taxons).not_to be_empty
+      expect(subject.best_selling_taxons).not_to be_nil
+    end
+  end
+
+  context '#abandoned_carts' do
+    it 'returns data' do
+      expect(subject.abandoned_carts).not_to be_nil
+    end
+  end
+
+  context '#checkout_steps' do
+    it 'returns data' do
+      expect(subject.checkout_steps).not_to be_empty
+    end
+  end
+
+  context '#abandoned_carts_products' do
+    it 'returns data' do
+      expect(subject.abandoned_carts_products).not_to be_empty
     end
   end
 
