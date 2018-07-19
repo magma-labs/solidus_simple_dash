@@ -46,27 +46,34 @@ module Spree
       Spree::Order.where(conditions).sum(:adjustment_total)
     end
 
-    def abandoned_carts
-      [ [I18n.t('spree.simple_dash.abandoned_carts'), Spree::Order.abandoned_carts.size],
-        [I18n.t('spree.simple_dash.completed_carts'), Spree::Order.complete.size] ]
+    def abandoned_carts(limit = 5)
+      abandoned_carts = Spree::Order.abandoned_carts.first(limit).size
+      order_completed = Spree::Order.complete.first(limit).size
+
+      [ [I18n.t('spree.simple_dash.abandoned_carts'), abandoned_carts],
+        [I18n.t('spree.simple_dash.completed_carts'), order_completed] ]
     end
 
-    def abandoned_carts_products
-      line_items = Spree::LineItem.abandoned_orders
+    def abandoned_carts_products(limit = 5)
+      line_items = Spree::LineItem.abandoned_orders.first(limit)
 
       line_items.sort { |x, y| y[1] <=> x[1] }
     end
 
-    def checkout_steps
-      orders = Spree::Order.abandoned_carts_steps.map do |o|
+    def checkout_steps(limit = 5)
+      orders = Spree::Order.abandoned_carts_steps.first(limit)
+
+      orders.map do |o|
         [o[0].titleize, o[1]]
       end
 
       orders.sort { |x, y| y[1] <=> x[1] }
     end
 
-    def best_selling_variants
-      line_items =  Spree::LineItem.top_selling_by_variants.map do |li|
+    def best_selling_variants(limit = 5)
+      line_items = Spree::LineItem.top_selling_by_variants.first(limit)
+
+      line_items.map do |li|
         next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
 
         [variant.name, li[1]]
@@ -75,22 +82,26 @@ module Spree
       line_items.sort { |x, y| y[1] <=> x[1] }
     end
 
-    def y
-      line_items = r.map do |li|
+    def top_grossing_variants(limit = 5)
+      line_items = Spree::LineItem.top_grossing_by_variants.first(limit)
+
+      line_items.map do |li|
         next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
 
         [variant.name, li[1]]
-      end.compact
+      end
 
       line_items.sort { |x, y| y[1] <=> x[1] }
     end
 
-    def best_selling_taxons
-      Spree::LineItem.top_selling_by_taxons
+    def best_selling_taxons(limit = 5)
+      Spree::LineItem.top_selling_by_taxons.first(limit)
     end
 
     def last_orders(limit = 5)
-      orders = Spree::Order.last_orders_by_line_items(limit).map do |o|
+      orders = Spree::Order.last_orders_by_line_items.first(limit)
+
+      orders.map do |o|
         next unless o.line_items
 
         qty = o.line_items.inject(0) { |sum, li| sum + li.quantity }
@@ -100,8 +111,10 @@ module Spree
       orders
     end
 
-    def biggest_spenders
-      spenders = Spree::Order.biggest_spenders.map do |o|
+    def biggest_spenders(limit = 5)
+      spenders = Spree::Order.biggest_spenders.first(limit)
+
+      spenders.map do |o|
         next unless user = Spree::User.find_by(id: o[0])
 
         orders = user.orders
@@ -113,7 +126,7 @@ module Spree
     end
 
     def out_of_stock_products
-      Spree::Product.out_of_stock.limit(5)
+      Spree::Product.out_of_stock.first(5)
     end
 
     private
