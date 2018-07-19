@@ -9,7 +9,7 @@
     <% @top_grossing_variants.each_with_index do |v,i| %>
       <div class='pie-element'>
         <i style='background-color:<%= @pie_colors[i] %>'>&nbsp;</i>
-        <label><%= truncate v[0], length: 35 %></label>
+        <label><%= v[0].truncate(35) %></label>
         <span><%= number_to_currency v[1], :precision => 0 %></span>
       </div>
     <% end %>

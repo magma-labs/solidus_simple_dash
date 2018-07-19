@@ -63,35 +63,35 @@ module Spree
     def checkout_steps(limit = 5)
       orders = Spree::Order.abandoned_carts_steps.first(limit)
 
-      orders.map do |o|
+      items = orders.map do |o|
         [o[0].titleize, o[1]]
       end
 
-      orders.sort { |x, y| y[1] <=> x[1] }
+      items.sort { |x, y| y[1] <=> x[1] }
     end
 
     def best_selling_variants(limit = 5)
-      line_items = Spree::LineItem.top_selling_by_variants.first(limit)
+      line_items = Spree::LineItem.top_selling_by_variants.first(5)
 
-      line_items.map do |li|
+      items = line_items.map do |li|
         next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
 
         [variant.name, li[1]]
       end.compact
 
-      line_items.sort { |x, y| y[1] <=> x[1] }
+      items.sort { |x, y| y[1] <=> x[1] }
     end
 
     def top_grossing_variants(limit = 5)
       line_items = Spree::LineItem.top_grossing_by_variants.first(limit)
 
-      line_items.map do |li|
+      items = line_items.map do |li|
         next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
 
         [variant.name, li[1]]
-      end
+      end.compact
 
-      line_items.sort { |x, y| y[1] <=> x[1] }
+      items.sort { |x, y| y[1] <=> x[1] }
     end
 
     def best_selling_taxons(limit = 5)
@@ -101,20 +101,20 @@ module Spree
     def last_orders(limit = 5)
       orders = Spree::Order.last_orders_by_line_items.first(limit)
 
-      orders.map do |o|
+      items = orders.map do |o|
         next unless o.line_items
 
         qty = o.line_items.inject(0) { |sum, li| sum + li.quantity }
         [o.email, qty, o.total]
       end.compact
 
-      orders
+      items
     end
 
     def biggest_spenders(limit = 5)
       spenders = Spree::Order.biggest_spenders.first(limit)
 
-      spenders.map do |o|
+      items = spenders.map do |o|
         next unless user = Spree::User.find_by(id: o[0])
 
         orders = user.orders
@@ -122,7 +122,7 @@ module Spree
         [orders.first.email, qty, o[1]]
       end.compact
 
-      spenders.sort { |x,y| y[2] <=> x[2] }
+      items.sort { |x,y| y[2] <=> x[2] }
     end
 
     def out_of_stock_products
