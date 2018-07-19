@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
 
   s.author    = 'Jonathan Tapia'
   s.email     = 'jonathan.tapia@magmalabs.io'
-  s.homepage  = 'http://github.com/jtapia/solidus_simple_dash'
+  s.homepage  = 'http://github.com/magma-labs/solidus_simple_dash'
   s.license   = 'BSD-3-Clause'
 
   s.files = Dir["{app,config,db,lib}/**/*", 'LICENSE', 'Rakefile', 'README.md']
