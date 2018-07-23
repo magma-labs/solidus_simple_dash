@@ -33,7 +33,7 @@ Visit ```/overview``` on Admin section
 
 Preview
 -------
-![solidus_simple_dash](https://user-images.githubusercontent.com/957520/42961497-8d9762c2-8b54-11e8-8a7a-c67132c799fc.png)
+![solidus_simple_dash](https://user-images.githubusercontent.com/957520/43102265-3a41c4c0-8e90-11e8-9e85-8f7734403010.png)
 
 Testing
 -------
