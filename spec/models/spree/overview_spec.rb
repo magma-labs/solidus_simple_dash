@@ -43,6 +43,12 @@ describe Spree::Overview, type: :model do
     end
   end
 
+  context '#abandoned_carts_by_day' do
+    it 'returns data' do
+      expect(subject.orders_by_day('abandoned_carts')).not_to be_empty
+    end
+  end
+
   context '#orders_line_total' do
     it 'returns data' do
       expect(subject.orders_line_total).not_to be_nil

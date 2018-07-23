@@ -12,9 +12,9 @@ module Spree
       @value = params[:value]
     end
 
-    def orders_by_day
+    def orders_by_day(type = 'orders')
       if value == 'Count'
-        orders = Spree::Order.select(:created_at).where(conditions)
+        orders = Spree::Order.select(:created_at).where(conditions(type))
         orders = orders.group_by { |o| o.created_at.to_date }
         fill_empty_entries(orders)
 
@@ -22,7 +22,7 @@ module Spree
           [ key.strftime('%Y-%m-%d'), orders[key].size ]
         end
       else
-        orders = Spree::Order.select([:created_at, :total]).where(conditions)
+        orders = Spree::Order.select([:created_at, :total]).where(conditions(type))
         orders = orders.group_by { |o| o.created_at.to_date }
         fill_empty_entries(orders)
 
@@ -140,12 +140,16 @@ module Spree
       end
     end
 
-    def conditions
-      if to
+    def conditions(type = 'orders')
+      query = if to
         "completed_at >= '#{from}' AND completed_at <= '#{to}'"
       else
         "completed_at >= '#{from}'"
       end
-    end
+
+      query << " AND state != 'complete'" if type == 'abandoned_carts'
+      query << " AND state = 'complete'" if type == 'orders'
+      query
+     end
   end
 end

@@ -1,0 +1,14 @@
+<div class='col-12'>
+  <div class='general-info options row' id='by-day-options'>
+    <div class='col-6'>
+      <label><%= t('spree.simple_dash.range') %>:</label>
+      <%= select_tag 'by_day_reports', options_for_select([[t('spree.simple_dash.last_7_days'), '7_days'], [t('spree.simple_dash.last_14_days'), '14_days'], [t('spree.simple_dash.this_month'), 'this_month'],
+                                              [t('spree.simple_dash.last_month'), 'last_month'], [t('spree.simple_dash.this_year'), 'this_year'], [t('spree.simple_dash.last_year'), 'last_year'] ], '7_days'), class: 'custom-select full-width' %>
+    </div>
+
+    <div class='col-6'>
+      <label><%= t('spree.simple_dash.value') %>:</label>
+      <%= select_tag 'by_day_value', options_for_select({t('spree.simple_dash.count') => 'Count', t('spree.simple_dash.value') => 'Value'}, 'Count'), class: 'custom-select full-width' %>
+    </div>
+  </div>
+</div>

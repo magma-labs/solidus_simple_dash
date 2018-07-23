@@ -18,6 +18,7 @@ module Spree
         @abandoned_carts_products = LazyObject.new { overview.abandoned_carts_products }
 
         @orders_by_day = LazyObject.new { overview.orders_by_day }
+        @abandoned_carts_by_day = LazyObject.new { overview.orders_by_day('abandoned_carts') }
         @orders_line_total = LazyObject.new { overview.orders_line_total }
         @orders_total = LazyObject.new { overview.orders_total }
         @orders_adjustment_total = LazyObject.new { overview.orders_adjustment_total }
@@ -30,13 +31,17 @@ module Spree
       end
 
       def report_data
-        case params[:report]
+        values = case params[:report]
+          when 'abandoned_carts'
+            '[[' + overview.orders_by_day('abandoned_carts').map do |day|
+              "['#{day[0]}', #{day[1]}]"
+            end.join(',') + ']]'
           when 'orders_by_day'
-            values = '[[' + overview.orders_by_day.map do |day|
+            '[[' + overview.orders_by_day.map do |day|
               "['#{day[0]}', #{day[1]}]"
             end.join(',') + ']]'
           when 'orders_totals'
-            values = [orders_total: overview.orders_total.to_i,
+            [orders_total: overview.orders_total.to_i,
               orders_line_total: overview.orders_line_total.to_i,
               orders_adjustment_total: overview.orders_adjustment_total.to_i
             ].to_json
