@@ -64,6 +64,16 @@ module Spree
       end
     end
 
+    def new_users_by_day
+      users = Spree::User.select(:created_at).order('created_at ASC')
+      users = users.group_by { |u| u.created_at.to_date }
+      fill_empty_entries(users)
+
+      users.keys.sort.map do |key|
+        [ key.strftime('%Y-%m-%d'), users[key].size ]
+      end
+    end
+
     def abandoned_carts_products(limit = 5)
       line_items = Spree::LineItem.abandoned_orders.first(limit)
 
