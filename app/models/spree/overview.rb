@@ -54,6 +54,16 @@ module Spree
         [I18n.t('spree.simple_dash.completed_carts'), order_completed] ]
     end
 
+    def new_users_by_day
+      users = Spree::User.select(:created_at).order('created_at ASC')
+      users = users.group_by { |u| u.created_at.to_date }
+      fill_empty_entries(users)
+
+      users.keys.sort.map do |key|
+        [ key.strftime('%Y-%m-%d'), users[key].size ]
+      end
+    end
+
     def abandoned_carts_products(limit = 5)
       line_items = Spree::LineItem.abandoned_orders.first(limit)
 
@@ -131,12 +141,12 @@ module Spree
 
     private
 
-    def fill_empty_entries(orders)
+    def fill_empty_entries(items)
       from_date = from.to_date
       to_date = (to || Time.now).to_date
 
       (from_date..to_date).each do |date|
-        orders[date] ||= []
+        items[date] ||= []
       end
     end
 

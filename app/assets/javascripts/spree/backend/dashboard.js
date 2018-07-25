@@ -41,6 +41,9 @@ function handle_orders_by_day(settings, r, e, t) {
     case 'abandoned_carts_by_day':
       title = abandoned_orders
       break;
+    case 'new_users_by_day':
+      title = new_users
+      break;
     default:
       title = orders_by_day_title
   }
@@ -136,9 +139,11 @@ jQuery(document).ready(function() {
   if (typeof(orders_by_day_points) == 'object') {
     var order_settings = build_options(orders_by_day_points, series_graph_options)
     var abandoned_carts_settings = build_options(abandoned_carts_by_day_points, series_graph_options)
+    var new_users_settings = build_options(new_users_by_day_points, series_graph_options)
 
     jQuery.jqplot('orders_by_day', orders_by_day_points, order_settings);
     jQuery.jqplot('abandoned_carts_by_day', abandoned_carts_by_day_points, abandoned_carts_settings);
+    jQuery.jqplot('new_users_by_day', new_users_by_day_points, new_users_settings);
 
     jQuery('#by-day-options select').change(function() {
       var report = jQuery("#by_day_reports :selected").val();
@@ -148,7 +153,7 @@ jQuery(document).ready(function() {
         type: 'GET',
         url: 'overview/report_data',
         data: ({
-          report: 'orders_by_day',
+          report: 'orders',
           name: report,
           value: value,
           authenticity_token: Spree.api_key
@@ -169,6 +174,20 @@ jQuery(document).ready(function() {
         }),
         success: function(r) {
           handle_orders_by_day(abandoned_carts_settings, r, '#abandoned_carts_by_day', 'abandoned_carts_by_day')
+        }
+      });
+
+      jQuery.ajax({
+        type: 'GET',
+        url: 'overview/report_data',
+        data: ({
+          report: 'new_users',
+          name: report,
+          value: value,
+          authenticity_token: Spree.api_key
+        }),
+        success: function(r) {
+          handle_orders_by_day(new_users_settings, r, '#new_users_by_day', 'new_users_by_day')
         }
       });
 

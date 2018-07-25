@@ -9,6 +9,7 @@ Add simple dashboard to review your sales based on variants, products and orders
 - Abandoned carts
 - Abandoned cart items
 - Checkout steps
+- New users
 
 Installation
 ------------
@@ -33,7 +34,7 @@ Visit ```/overview``` on Admin section
 
 Preview
 -------
-![solidus_simple_dash](https://user-images.githubusercontent.com/957520/43102265-3a41c4c0-8e90-11e8-9e85-8f7734403010.png)
+![solidus_simple_dash](https://user-images.githubusercontent.com/957520/43218208-597c6014-9009-11e8-8155-c2f583cf4627.png)
 
 Testing
 -------

@@ -49,6 +49,12 @@ describe Spree::Overview, type: :model do
     end
   end
 
+  context '#new_users_by_day' do
+    it 'returns data' do
+      expect(subject.new_users_by_day).not_to be_empty
+    end
+  end
+
   context '#orders_line_total' do
     it 'returns data' do
       expect(subject.orders_line_total).not_to be_nil

@@ -19,6 +19,7 @@ module Spree
 
         @orders_by_day = LazyObject.new { overview.orders_by_day }
         @abandoned_carts_by_day = LazyObject.new { overview.orders_by_day('abandoned_carts') }
+        @new_users_by_day = LazyObject.new { overview.new_users_by_day }
         @orders_line_total = LazyObject.new { overview.orders_line_total }
         @orders_total = LazyObject.new { overview.orders_total }
         @orders_adjustment_total = LazyObject.new { overview.orders_adjustment_total }
@@ -36,8 +37,12 @@ module Spree
             '[[' + overview.orders_by_day('abandoned_carts').map do |day|
               "['#{day[0]}', #{day[1]}]"
             end.join(',') + ']]'
-          when 'orders_by_day'
+          when 'orders'
             '[[' + overview.orders_by_day.map do |day|
+              "['#{day[0]}', #{day[1]}]"
+            end.join(',') + ']]'
+          when 'new_users'
+            '[[' + overview.new_users_by_day.map do |day|
               "['#{day[0]}', #{day[1]}]"
             end.join(',') + ']]'
           when 'orders_totals'

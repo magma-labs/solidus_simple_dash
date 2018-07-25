@@ -6,6 +6,7 @@ es:
     simple_dash:
       abandoned_carts: Carritos Abandonados
       abandoned_carts_products: Productos en Carritos Abandonados
+      abandoned_orders: Ordenes Abandonadas
       best_selling_products: Productos Mejor Vendidos
       best_selling_taxons: Categorias Mejor Vendidas
       biggest_spenders: Mejores Compradores
@@ -21,6 +22,7 @@ es:
       last_7_days: Últimos 7 Días
       last_month: Último Mes
       last_year: Último Año
+      new_users: Nuevos Usuarios
       ord_qty: Ord. Ctd.
       ord_total: Ord. Total
       orders: Ordenes
