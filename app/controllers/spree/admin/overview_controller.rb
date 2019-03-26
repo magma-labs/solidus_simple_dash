@@ -62,7 +62,7 @@ module Spree
       end
 
       def display_ability
-        @display_ability ||= Spree::Order.count > 10
+        @display_ability ||= Spree::Order.count > SolidusSimpleDash::Config.limit
       end
 
       def set_date
