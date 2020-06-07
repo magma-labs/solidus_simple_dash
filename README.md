@@ -1,6 +1,6 @@
 SolidusSimpleDash
 =================
-[![Build Status](https://travis-ci.org/magma-labs/solidus_simple_dash.svg?branch=master)](https://travis-ci.org/magma-labs/solidus_simple_dash)
+[![Build Status](https://circleci.com/gh/magma-labs/solidus_favorites/tree/master.svg?style=shield)](https://circleci.com/gh/magma-labs/solidus_favorites/tree/master)
 
 Add simple dashboard to review your sales based on variants, products and orders, it contains:
 - Best selling products
