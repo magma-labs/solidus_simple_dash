@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require 'solidus_core'
 require 'solidus_support'
-require 'spree/auth/devise'
-require 'spree/authentication_helpers'
+require 'deface'
 require 'jqplot-rails'
+require 'solidus_simple_dash/version'
+require 'solidus_simple_dash/configuration'
 require 'solidus_simple_dash/engine'
 
 module Spree
