@@ -1,4 +1,4 @@
-# this clas was inspired (heavily) from the mephisto admin architecture
+# frozen_string_literal: true
 
 module Spree
   module Admin
@@ -48,8 +48,7 @@ module Spree
           when 'orders_totals'
             [orders_total: overview.orders_total.to_i,
               orders_line_total: overview.orders_line_total.to_i,
-              orders_adjustment_total: overview.orders_adjustment_total.to_i
-            ].to_json
+              orders_adjustment_total: overview.orders_adjustment_total.to_i].to_json
         end
 
         render js: values
@@ -66,7 +65,7 @@ module Spree
       end
 
       def set_date
-        params.merge!({ from: (Time.new().to_date - 1.week).to_s(:db),
+        params.merge!({ from: (Time.new.to_date - 1.week).to_s(:db),
           value: 'Count' })
       end
 
@@ -76,9 +75,9 @@ module Spree
 
         dates = case params[:name]
           when '7_days'
-            { from: (Time.new().to_date - 1.week).to_s(:db) }
+            { from: (Time.new.to_date - 1.week).to_s(:db) }
           when '14_days'
-            { from: (Time.new().to_date - 2.week).to_s(:db) }
+            { from: (Time.new.to_date - 2.week).to_s(:db) }
           when 'this_month'
             { from: from.to_s(:db),
               to: to.to_s(:db) }

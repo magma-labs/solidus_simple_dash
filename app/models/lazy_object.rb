@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LazyObject < BasicObject
   def initialize(&callable)
     @__callable__ = callable

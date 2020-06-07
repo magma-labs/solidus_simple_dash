@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Spree
   class Overview
     attr_accessor :to, :from, :name, :value
 
     DEFAULT_COLORS = ['#0093DA', '#FF3500', '#92DB00', '#1AB3FF',
-      '#FFB800'].freeze
+                      '#FFB800'].freeze
 
     def initialize(params)
       @to = params[:to]
@@ -19,7 +21,7 @@ module Spree
         fill_empty_entries(orders)
 
         orders.keys.sort.map do |key|
-          [ key.strftime('%Y-%m-%d'), orders[key].size ]
+          [key.strftime('%Y-%m-%d'), orders[key].size]
         end
       else
         orders = Spree::Order.select([:created_at, :total]).where(conditions(type))
@@ -27,9 +29,9 @@ module Spree
         fill_empty_entries(orders)
 
         orders.keys.sort.map do |key|
-          [ key.strftime('%Y-%m-%d'), orders[key].inject(0) do |s, o|
+          [key.strftime('%Y-%m-%d'), orders[key].inject(0) do |s, o|
             s += o.total
-          end ]
+          end]
         end
       end
     end
@@ -50,8 +52,8 @@ module Spree
       abandoned_carts = Spree::Order.abandoned_carts.first(limit).size
       order_completed = Spree::Order.complete.first(limit).size
 
-      [ [I18n.t('spree.simple_dash.abandoned_carts'), abandoned_carts],
-        [I18n.t('spree.simple_dash.completed_carts'), order_completed] ]
+      [[I18n.t('spree.simple_dash.abandoned_carts'), abandoned_carts],
+       [I18n.t('spree.simple_dash.completed_carts'), order_completed]]
     end
 
     def new_users_by_day
@@ -60,17 +62,7 @@ module Spree
       fill_empty_entries(users)
 
       users.keys.sort.map do |key|
-        [ key.strftime('%Y-%m-%d'), users[key].size ]
-      end
-    end
-
-    def new_users_by_day
-      users = Spree::User.select(:created_at).order('created_at ASC')
-      users = users.group_by { |u| u.created_at.to_date }
-      fill_empty_entries(users)
-
-      users.keys.sort.map do |key|
-        [ key.strftime('%Y-%m-%d'), users[key].size ]
+        [key.strftime('%Y-%m-%d'), users[key].size]
       end
     end
 
@@ -142,7 +134,7 @@ module Spree
         [orders.first.email, qty, o[1]]
       end.compact
 
-      items.sort { |x,y| y[2] <=> x[2] }
+      items.sort { |x, y| y[2] <=> x[2] }
     end
 
     def out_of_stock_products
@@ -167,9 +159,9 @@ module Spree
         "completed_at >= '#{from}'"
       end
 
-      query << " AND state != 'complete'" if type == 'abandoned_carts'
-      query << " AND state = 'complete'" if type == 'orders'
+      query + " AND state != 'complete'" if type == 'abandoned_carts'
+      query + " AND state = 'complete'" if type == 'orders'
       query
-     end
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Spree::Overview, type: :model do
   let(:store) { create(:store) }
   let(:user) { create(:user) }
@@ -14,25 +16,31 @@ describe Spree::Overview, type: :model do
   let!(:taxonomy) { create(:taxonomy, name: 'Categories') }
   let!(:taxon) do
     taxon = create(:taxon, taxonomy: taxonomy)
-    product1.taxons = [ taxon ]
-    product2.taxons = [ taxon ]
-    product3.taxons = [ taxon ]
-    product4.taxons = [ taxon ]
-    product5.taxons = [ taxon ]
+    product1.taxons = [taxon]
+    product2.taxons = [taxon]
+    product3.taxons = [taxon]
+    product4.taxons = [taxon]
+    product5.taxons = [taxon]
   end
   let!(:line_items) do
-    [ create(:line_item, variant: variant1, quantity: 5),
-      create(:line_item, variant: variant2, quantity: 4),
-      create(:line_item, variant: variant3, quantity: 3),
-      create(:line_item, variant: variant4, quantity: 2),
-      create(:line_item, variant: variant5, quantity: 1) ]
+    [create(:line_item, variant: variant1, quantity: 5),
+     create(:line_item, variant: variant2, quantity: 4),
+     create(:line_item, variant: variant3, quantity: 3),
+     create(:line_item, variant: variant4, quantity: 2),
+     create(:line_item, variant: variant5, quantity: 1)]
   end
   let!(:order) do
     create(:completed_order_with_totals, user: user, line_items: line_items)
   end
-  let!(:order_on_cart) { create(:order, user: user, line_items: line_items, completed_at: nil, state: 'cart') }
+  let!(:order_on_cart) do
+    create(:order,
+           user: user,
+           line_items: line_items,
+           completed_at: nil,
+           state: 'cart')
+  end
   let(:params) do
-    { from: (Time.new().to_date - 1.week).to_s(:db), value: 'Count' }
+    { from: (Time.new.to_date - 1.week).to_s(:db), value: 'Count' }
   end
 
   subject { Spree::Overview.new(params) }
