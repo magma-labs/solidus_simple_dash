@@ -86,7 +86,7 @@ module Spree
       line_items = Spree::LineItem.top_selling_by_variants.first(5)
 
       items = line_items.map do |li|
-        next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
+        next unless variant = Spree::Variant.with_discarded.find_by(id: li[0])
 
         [variant.name, li[1]]
       end.compact
@@ -98,7 +98,7 @@ module Spree
       line_items = Spree::LineItem.top_grossing_by_variants.first(limit)
 
       items = line_items.map do |li|
-        next unless variant = Spree::Variant.with_deleted.find_by(id: li[0])
+        next unless variant = Spree::Variant.with_discarded.find_by(id: li[0])
 
         [variant.name, li[1]]
       end.compact
