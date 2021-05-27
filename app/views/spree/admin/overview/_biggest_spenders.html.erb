@@ -16,7 +16,7 @@
       <tbody>
         <% @biggest_spenders.each do |order| %>
           <tr>
-            <td><%= order[0].truncate(18) %></td>
+            <td><%= order[0]&.truncate(18) %></td>
             <td class='text-right'><%= order[1] %></td>
             <td class='text-right'><%= number_to_currency order[2] %></td>
           </tr>
