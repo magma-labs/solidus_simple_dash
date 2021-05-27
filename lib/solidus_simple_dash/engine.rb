@@ -1,7 +1,14 @@
+# frozen_string_literal: true
+
+# require 'solidus_core'
+require 'solidus_simple_dash'
+
 module SolidusSimpleDash
   class Engine < Rails::Engine
-    require 'spree/core'
+    include SolidusSupport::EngineExtensions
+
     isolate_namespace Spree
+
     engine_name 'solidus_simple_dash'
 
     # use rspec for tests
@@ -9,18 +16,20 @@ module SolidusSimpleDash
       g.test_framework :rspec
     end
 
-    config.autoload_paths += %W(#{config.root}/lib)
-
     initializer 'solidus_simple_dash.environment', before: :load_config_initializers do
       SolidusSimpleDash::Config = SolidusSimpleDash::Configuration.new
     end
 
-    def self.activate
-      Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
-        Rails.configuration.cache_classes ? require(c) : load(c)
+    config.to_prepare do
+      ::Spree::Backend::Config.configure do |config|
+        # This is the email submenu, useful for store users
+        config.menu_items << config.class::MenuItem.new(
+          SolidusSimpleDash::Config.overview_tabs,
+          'bar-chart',
+          label: 'overview',
+          condition: -> { can?(:manage, ::Spree::Overview) }
+        )
       end
     end
-
-    config.to_prepare(&method(:activate).to_proc)
   end
 end

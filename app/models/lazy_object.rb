@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LazyObject < BasicObject
   def initialize(&callable)
     @__callable__ = callable
@@ -11,5 +13,9 @@ class LazyObject < BasicObject
   # Forwards all method calls to the target object.
   def method_missing(method_name, *args, &block)
     __target_object__.send(method_name, *args, &block)
+  end
+
+  def respond_to_missing?(method_name, include_private = false)
+    super
   end
 end
