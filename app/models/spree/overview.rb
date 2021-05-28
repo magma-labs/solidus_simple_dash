@@ -171,10 +171,28 @@ module Spree
     def conditions(type = 'orders')
       query = []
 
-      query << "completed_at >= '#{from}' AND completed_at <= '#{to}'" if to
-      query << "completed_at >= '#{from}'"
-      query << " AND state != 'complete'" if type == 'abandoned_carts'
-      query << " AND state = 'complete'" if type == 'orders'
+      query << if to
+                 Arel.sql(
+                   "#{Spree::Order.quoted_table_name}.completed_at >= '#{from}'
+                   AND #{Spree::Order.quoted_table_name}.completed_at <= '#{to}'"
+                 )
+               else
+                 Arel.sql(
+                   "#{Spree::Order.quoted_table_name}.completed_at >= '#{from}'"
+                 )
+               end
+
+      query << if type == 'abandoned_carts'
+                 Arel.sql(
+                   " AND #{Spree::Order.quoted_table_name}.state != 'complete'"
+                 )
+               end
+
+      query << if type == 'orders'
+                 Arel.sql(
+                   " AND #{Spree::Order.quoted_table_name}.state = 'complete'"
+                 )
+               end
 
       query.join
     end

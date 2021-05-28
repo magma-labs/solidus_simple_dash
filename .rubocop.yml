@@ -15,3 +15,6 @@ Rails/SkipsModelValidations:
 
 Gemspec/OrderedDependencies:
   Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false

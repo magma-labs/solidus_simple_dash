@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 # rubocop:disable RSpec/LetSetup
+# rubocop:disable RSpec/NestedGroups
 # rubocop:disable RSpec/MultipleExpectations
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Spree::Admin::OverviewController, type: :controller do
@@ -40,24 +41,426 @@ describe Spree::Admin::OverviewController, type: :controller do
       end
     end
 
-    xdescribe '#report_data' do
-      let(:params) { { report: 'orders_totals', name: '7_days' } }
+    describe '#report_data' do
+      context 'with orders_totals' do
+        context 'with 7 days' do
+          let(:params) { { report: 'orders_totals', name: '7_days' } }
 
-      it 'allow JSON request with invalid token' do
-        get :report_data, params: params, format: :js, xhr: true
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
 
-        expect(response).to be_successful
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with 14 days' do
+          let(:params) { { report: 'abandoned_carts', name: '14_days' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this month' do
+          let(:params) { { report: 'abandoned_carts', name: 'this_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last month' do
+          let(:params) { { report: 'abandoned_carts', name: 'last_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this year' do
+          let(:params) { { report: 'abandoned_carts', name: 'this_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last year' do
+          let(:params) { { report: 'abandoned_carts', name: 'last_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
       end
 
-      it 'allow JSON request with a valid token' do
-        params[:authenticity_token] = '123456'
-        get :report_data, params: params, format: :js, xhr: true
+      context 'with orders' do
+        context 'with 7 days' do
+          let(:params) { { report: 'orders', name: '7_days' } }
 
-        expect(response).to be_successful
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with 14 days' do
+          let(:params) { { report: 'orders', name: '14_days' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this month' do
+          let(:params) { { report: 'orders', name: 'this_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last month' do
+          let(:params) { { report: 'orders', name: 'last_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this year' do
+          let(:params) { { report: 'orders', name: 'this_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last year' do
+          let(:params) { { report: 'orders', name: 'last_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+      end
+
+      context 'with new_users' do
+        context 'with 7 days' do
+          let(:params) { { report: 'new_users', name: '7_days' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with 14 days' do
+          let(:params) { { report: 'new_users', name: '14_days' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this month' do
+          let(:params) { { report: 'new_users', name: 'this_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last month' do
+          let(:params) { { report: 'new_users', name: 'last_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this year' do
+          let(:params) { { report: 'new_users', name: 'this_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last year' do
+          let(:params) { { report: 'new_users', name: 'last_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+      end
+
+      context 'with abandoned_carts' do
+        context 'with 7 days' do
+          let(:params) { { report: 'abandoned_carts', name: '7_days' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with 14 days' do
+          let(:params) { { report: 'abandoned_carts', name: '14_days' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this month' do
+          let(:params) { { report: 'abandoned_carts', name: 'this_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last month' do
+          let(:params) { { report: 'abandoned_carts', name: 'last_month' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with this year' do
+          let(:params) { { report: 'abandoned_carts', name: 'this_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
+
+        context 'with last year' do
+          let(:params) { { report: 'abandoned_carts', name: 'last_year' } }
+
+          it 'allow JSON request with invalid token' do
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+
+          it 'allow JSON request with a valid token' do
+            params[:authenticity_token] = '123456'
+            get :report_data, params: params, format: :js, xhr: true
+
+            expect(response).to be_successful
+          end
+        end
       end
     end
   end
 end
 # rubocop:enable RSpec/LetSetup
+# rubocop:enable RSpec/NestedGroups
 # rubocop:enable RSpec/MultipleExpectations
 # rubocop:enable RSpec/MultipleMemoizedHelpers

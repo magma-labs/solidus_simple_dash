@@ -10,7 +10,7 @@ module SolidusSimpleDash
       end
 
       def add_stylesheets
-        inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require spree/backend/solidus_simple_dash\n", before: %r(/*/), verbose: true
+        inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css', " *= require spree/backend/solidus_simple_dash\n", before: /\*\//, verbose: true
       end
 
       def add_migrations
