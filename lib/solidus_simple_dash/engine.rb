@@ -22,9 +22,8 @@ module SolidusSimpleDash
 
     config.to_prepare do
       ::Spree::Backend::Config.configure do |config|
-        # This is the email submenu, useful for store users
         config.menu_items << config.class::MenuItem.new(
-          SolidusSimpleDash::Config.overview_tabs,
+          [:overview],
           'bar-chart',
           label: 'overview',
           condition: -> { can?(:manage, ::Spree::Overview) }

@@ -5,6 +5,7 @@ module Spree
     class OverviewController < Spree::Admin::BaseController
       before_action :display_ability
       before_action :set_date
+      before_action :value, only: :report_data
       before_action :date_range, only: :report_data
 
       def index
@@ -34,21 +35,27 @@ module Spree
       def report_data
         values = case params[:report]
                  when 'abandoned_carts'
-                   [[overview.orders_by_day('abandoned_carts').map do |day|
-                     "['#{day[0]}', #{day[1]}]"
-                   end]].join(',')
+                   Array.new(
+                     overview.orders_by_day('abandoned_carts').map do |day|
+                       [day[0].to_s, day[1].to_s]
+                     end
+                   ).to_json
                  when 'orders'
-                   [[overview.orders_by_day.map do |day|
-                     "['#{day[0]}', #{day[1]}]"
-                   end.join(',')]]
+                   Array.new(
+                     overview.orders_by_day.map do |day|
+                       [day[0].to_s, day[1].to_s]
+                     end
+                   ).to_json
                  when 'new_users'
-                   [[overview.new_users_by_day.map do |day|
-                     "['#{day[0]}', #{day[1]}]"
-                   end.join(',')]]
+                   Array.new(
+                     overview.new_users_by_day.map do |day|
+                       [day[0].to_s, day[1].to_s]
+                     end
+                   ).to_json
                  when 'orders_totals'
                    [orders_total: overview.orders_total.to_i,
-                     orders_line_total: overview.orders_line_total.to_i,
-                     orders_adjustment_total: overview.orders_adjustment_total.to_i].to_json
+                    orders_line_total: overview.orders_line_total.to_i,
+                    orders_adjustment_total: overview.orders_adjustment_total.to_i].to_json
                  end
 
         render js: values
@@ -65,8 +72,16 @@ module Spree
       end
 
       def set_date
-        params.merge!({ from: (Time.zone.now.to_date - 1.week).to_s(:db),
-          value: 'Count' })
+        params.merge!({
+          from: (Time.zone.now.to_date - 1.week).to_s(:db),
+          value: 'Count'
+        })
+      end
+
+      def value
+        params.merge!({
+          value: params[:value] || 'Count'
+        })
       end
 
       def date_range

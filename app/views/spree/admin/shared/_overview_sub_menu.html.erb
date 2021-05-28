@@ -3,7 +3,7 @@
     <%= tab :overview, match_path: '/overview' %>
   </ul>
 <% else %>
-  <% if can? :admin, Spree::Order %>
-    <%= tab *SolidusSimpleDash::Config::ORDER_TABS, icon: 'bar-chart' %>
+  <% if can? :admin, Spree::Overview %>
+    <%= tab [:overview], icon: 'bar-chart' %>
   <% end %>
 <% end %>
