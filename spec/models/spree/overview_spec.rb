@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# rubocop:disable RSpec/NestedGroups
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Spree::Overview, type: :model do
   let(:store) { create(:store) }
@@ -10,10 +11,13 @@ describe Spree::Overview, type: :model do
   let(:line_items) do
     [create(:line_item, variant: product.master, quantity: 5)]
   end
-  let(:params) do
+  let(:params_with_count) do
     { from: (Time.zone.now.to_date - 1.week).to_s(:db), value: 'Count' }
   end
-  let(:overview) { described_class.new(params) }
+  let(:params_with_value) do
+    { from: (Time.zone.now.to_date - 1.week).to_s(:db), value: 'Value' }
+  end
+  let(:overview) { described_class.new(params_with_count) }
 
   context 'with instance' do
     before do
@@ -32,8 +36,20 @@ describe Spree::Overview, type: :model do
     end
 
     describe '.orders_by_day' do
-      it 'returns orders by day' do
-        expect(overview.orders_by_day).not_to be_empty
+      describe 'with count' do
+        let(:overview) { described_class.new(params_with_count) }
+
+        it 'returns orders by day' do
+          expect(overview.orders_by_day).not_to be_nil
+        end
+      end
+
+      describe 'with value' do
+        let(:overview) { described_class.new(params_with_value) }
+
+        it 'returns orders by day' do
+          expect(overview.orders_by_day).not_to be_nil
+        end
       end
     end
 
@@ -114,6 +130,13 @@ describe Spree::Overview, type: :model do
         expect(overview.out_of_stock_products).not_to be_empty
       end
     end
+
+    describe '.last_orders' do
+      it 'returns cout of stock products' do
+        expect(overview.last_orders).not_to be_empty
+      end
+    end
   end
 end
+# rubocop:enable RSpec/NestedGroups
 # rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -16,7 +16,7 @@ module Spree
       @to = params[:to]
       @from = params[:from]
       @name = params[:name]
-      @value = params[:value]
+      @value = params[:value] || 'Count'
     end
 
     def orders_by_day(type = 'orders')
@@ -34,8 +34,8 @@ module Spree
         fill_empty_entries(orders)
 
         orders.keys.sort.map do |key|
-          [key.strftime('%Y-%m-%d'), orders[key].inject(0) do |s, o|
-            s + o.total
+          [key.strftime('%Y-%m-%d'), orders[key].inject(0) do |_s, o|
+            o.total
           end]
         end
       end
