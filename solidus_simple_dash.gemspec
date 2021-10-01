@@ -30,12 +30,13 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'solidus_core', ['>= 2.5', '< 4']
   s.add_dependency 'solidus_backend', ['>= 2.5', '< 4']
-  s.add_dependency 'solidus_support', '~> 0.5'
+  s.add_dependency 'solidus_support', '~> 0.8'
   s.add_dependency 'deface', '~> 1.0'
   s.add_dependency 'jqplot-rails'
 
-  s.add_development_dependency 'solidus_dev_support', '~> 2.3'
-  s.add_development_dependency 'autoprefixer-rails', '~> 10.2.5'
-  s.add_development_dependency 'rspec-activemodel-mocks'
-  s.add_development_dependency 'shoulda-matchers'
+  s.add_dependency 'autoprefixer-rails', ['~> 10.2', '>= 10.2.5.1']
+  s.add_dependency 'rspec-activemodel-mocks'
+  s.add_dependency 'shoulda-matchers'
+
+  s.add_development_dependency 'solidus_dev_support'
 end
