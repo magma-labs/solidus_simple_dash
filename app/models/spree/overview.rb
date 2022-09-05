@@ -62,7 +62,7 @@ module Spree
     end
 
     def new_users_by_day
-      users = Spree::User.select(:created_at).order('created_at ASC')
+      users = Spree.user_class.select(:created_at).order('created_at ASC')
       users = users.group_by { |u| u.created_at.to_date }
       fill_empty_entries(users)
 
@@ -135,7 +135,7 @@ module Spree
       spenders = Spree::Order.biggest_spenders.take(limit)
 
       items = spenders.map do |o|
-        next unless user = Spree::User.find_by(id: o[0])
+        next unless user = Spree.user_class.find_by(id: o[0])
 
         orders = user.orders
         qty = orders.size
