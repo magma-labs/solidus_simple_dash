@@ -156,7 +156,11 @@ module Spree
     end
 
     def variant_discarded?(variant_id)
-      Spree::Variant.discarded.find_by(id: variant_id).present?
+      if Spree.solidus_gem_version >= Gem::Version.new('3')
+        Spree::Variant.with_discarded.find_by(id: variant_id).discarded?
+      else
+        Spree::Variant.discarded.find_by(id: variant_id).present?
+      end
     end
 
     def fill_empty_entries(items)
